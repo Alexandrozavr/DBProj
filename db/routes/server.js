@@ -8,7 +8,30 @@ router.get('/',async (req, res) => {
     const dbs = await data_bases.findMany({
         select:{
             id: true,
-            titles:true,
+            title:true,
+
+        }
+    });
+    res.json(dbs)
+})
+
+router.get('/lists',async (req, res) => {
+    const lists = await list.findMany({
+        select:{
+            id: true,
+            title:true,
+            father_id: true
+
+        }
+    });
+    res.json(lists)
+})
+
+router.get('/',async (req, res) => {
+    const dbs = await data_bases.findMany({
+        select:{
+            id: true,
+            title:true,
             lists: true
         }
     });
@@ -18,7 +41,7 @@ router.get('/',async (req, res) => {
 router.post('/', async (req, res) => {
     const {title} = req.body;
 
-    const titleExists = await title.findUnique({
+    const titleExists = await data_bases.findUnique({
         where:{
             title
         },
